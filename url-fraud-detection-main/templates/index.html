@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>URL Threat Detector</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #0d0d0d;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        color: #3399ff;
+        margin-bottom: 30px;
+      }
+
+      .container {
+        display: flex;
+        gap: 40px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .card {
+        background-color: #1a1a1a;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        width: 350px;
+      }
+
+      .card h2 {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+        color: #fff;
+        text-align: center;
+      }
+
+      input[type="file"],
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        border-radius: 5px;
+        border: none;
+        margin-bottom: 15px;
+      }
+
+      button {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      button:hover {
+        background-color: #218838;
+      }
+
+      .result {
+        margin-top: 20px;
+        font-size: 1.1rem;
+      }
+
+      .result strong {
+        color: #00e6e6;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ThreatGuard</h1>
+    <div class="container">
+      <!-- Malicious File Upload -->
+      <div class="card">
+        <h2>Malicious Files</h2>
+        <form method="POST" enctype="multipart/form-data" action="/analyze">
+          <input type="file" name="file" required />
+          <button type="submit">Analyze</button>
+        </form>
+        {% if message %}
+        <div class="result"><strong>Result:</strong> {{ message }}</div>
+        {% endif %}
+      </div>
+
+      <!-- URL Threat Detection -->
+      <div class="card">
+        <h2>URL Threat Detection</h2>
+        <form method="POST" action="/predict">
+          <input type="text" name="url" placeholder="Enter URL" required />
+          <button type="submit">Classify</button>
+        </form>
+        {% if predicted_class %}
+        <div class="result">
+          <strong>URL:</strong> {{ input_url }}<br />
+          <strong>Predicted Class:</strong> {{ predicted_class }}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>
